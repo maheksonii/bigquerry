@@ -1,0 +1,2 @@
+# bigquerry
+Business analytics assignment
