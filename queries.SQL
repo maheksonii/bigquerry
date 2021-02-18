@@ -1,6 +1,7 @@
+--to get a tabular preview of the dataset--
 SELECT*FROM `bigquery-public-data.covid19_italy.data_by_province`Limit 10
 
---ehwfiwaoeio--
+--To extract all those data points where the region name contain the letters "Ven" and where the confirmed cases are greater than 300--
 SELECT date,region_name AS region, confirmed_cases
 FROM`bigquery-public-data.covid19_italy.data_by_province`
 WHERE region_name like '%Ven%' and confirmed_cases > 300
@@ -8,29 +9,21 @@ ORDER BY confirmed_cases DESC
 LIMIT 10
 
 
-
+--To extract all those data points where the region name contain the letters "Lombardia" and where the confirmed cases are greater than 300 and we sort the data set by the number of confirmed cases in descending order--
 SELECT date,region_name AS region, confirmed_cases
 FROM`bigquery-public-data.covid19_italy.data_by_province`
 WHERE region_name like '%Lombardia%' and confirmed_cases > 300
 ORDER BY confirmed_cases DESC 
 LIMIT 10
 
+--Since Lomardia and Veneto were the worst impacted regions of italy, this querry returns data on the number of confirmed cases from these regions in ascending order--
 SELECT date,region_name AS region, confirmed_cases
 FROM`bigquery-public-data.covid19_italy.data_by_province`
 WHERE region_name in ('Lombardia','Veneto')
 ORDER BY confirmed_cases asc
 LIMIT 100
 
-
-SELECT
-region_name AS region, 
-sum(confirmed_cases) as total_cases
-FROM`bigquery-public-data.covid19_italy.data_by_province`
-WHERE region_name in ('Lombardia','Veneto')
-GROUP BY region
-ORDER BY total_cases DESC 
-LIMIT 1000
-
+--This querry helps us return the sum of total cases in the two worst impacted regions of italy due to covif-19, where its grouped by region and sorted by total number of cases--
 SELECT
 region_name AS region, 
 sum(confirmed_cases) as total_cases
@@ -40,6 +33,7 @@ GROUP BY region
 ORDER BY total_cases DESC 
 LIMIT 100
 
+--This querry helps us get the data on the total number of covid-19 cases from either of the two provinces 'Latina' or 'di definizione/aggiornamento' where the number of cases were greater than 2000, while the data is grouped by date, province name and region name, and sorted by total confirmed cases in descending order--
 SELECT 
 date,province_name,region_name as region ,sum(confirmed_cases) as confirmed_cases
 FROM`bigquery-public-data.covid19_italy.data_by_province`
@@ -49,6 +43,8 @@ group by date, province_name,region_name
 order by confirmed_cases desc 
 limit 10
 
+--This querry performs a left join by the use of the common variable region name--
+--it returns the tests performed in all the regions corresponding to the temperature in the region. The intention of this join was to see if there is any relationship between the tests performed and the temperature in that region--
 SELECT 
 a.average_temperature_celsius,b.tests_performed
 FROM `bigquery-public-data.covid19_open_data.covid19_open_data`a
