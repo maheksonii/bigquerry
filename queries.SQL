@@ -43,7 +43,7 @@ group by date, province_name,region_name
 order by confirmed_cases desc 
 limit 10
 
---This querry performs a left join by the use of the common variable region name--
+--This following querry performs a left join by the use of the common variable region name--
 --it returns the tests performed in all the regions corresponding to the temperature in the region. The intention of this join was to see if there is any relationship between the tests performed and the temperature in that region--
 SELECT 
 a.average_temperature_celsius,b.tests_performed
@@ -52,3 +52,13 @@ LEFT JOIN `bigquery-public-data.covid19_italy.data_by_region` b
 ON(
     a.subregion1_name = b.region_name
 )
+
+--it returns the new number of total confirmed cases in all the regions corresponding to the rainfall recorded in the region. The intention of this join was to see if there is any relationship between the new confirmed cases and the rainfall in that region--
+SELECT 
+a.rainfall_mm,b.new_total_confirmed_cases
+FROM `bigquery-public-data.covid19_open_data.covid19_open_data`a
+LEFT JOIN `bigquery-public-data.covid19_italy.data_by_region` b
+ON(
+    a.subregion1_name = b.region_name
+)
+
