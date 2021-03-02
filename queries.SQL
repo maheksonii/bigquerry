@@ -62,3 +62,23 @@ ON(
     a.subregion1_name = b.region_name
 )
 
+-- the following querys on joins are from the data available on bicycle from london--
+
+
+--the follwing queery helps return the number of bicycles available at each of the stations in london--
+--the purpose is to help analyse how many cycles would be required at each stations depending on the frequency of cycle pickups from these stations--
+SELECT  `bigquery-public-data.london_bicycles.cycle_hire`. start_station_id ,  `bigquery-public-data.london_bicycles.cycle_stations`. bikes_count
+FROM `bigquery-public-data.london_bicycles.cycle_hire` 
+inner join  `bigquery-public-data.london_bicycles.cycle_stations`
+on `bigquery-public-data.london_bicycles.cycle_hire`. start_station_id = `bigquery-public-data.london_bicycles.cycle_stations`. id
+LIMIT 100
+
+--the following join returns the the individual-id along with which station the cycle was picked up from--
+SELECT  `bigquery-public-data.london_bicycles.cycle_hire`. rental_id ,  `bigquery-public-data.london_bicycles.cycle_stations`. id
+FROM `bigquery-public-data.london_bicycles.cycle_hire` 
+inner join  `bigquery-public-data.london_bicycles.cycle_stations` 
+on `bigquery-public-data.london_bicycles.cycle_hire`. start_station_id = `bigquery-public-data.london_bicycles.cycle_stations`. id
+LIMIT 100
+
+
+
